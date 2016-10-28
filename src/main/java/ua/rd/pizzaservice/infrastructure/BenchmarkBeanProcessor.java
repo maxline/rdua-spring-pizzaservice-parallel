@@ -4,6 +4,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -34,28 +35,34 @@ public class BenchmarkBeanProcessor implements BeanPostProcessor {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 Method beanMethod = targetBean.getClass().getMethod(method.getName(), method.getParameterTypes());
 
-                Object o;
-                Benchmark benchmark = beanMethod.getAnnotation(Benchmark.class);
-                if ((benchmark != null) && (benchmark.value())) {
-                    long start = System.nanoTime();
-                    o = method.invoke(targetBean, args);
-                    long end = System.nanoTime();
-                    System.out.printf("working time of %s method with arguments: %d nanoseconds%n", method.getName(), (end - start));
-                } else {
-                    o = method.invoke(targetBean, args);
+                if (isBenchMarkAnnotationPresentAndTrue(beanMethod)) {
+                    return wrapMethodInBenchmark(targetBean, beanMethod, args);
                 }
-                return o;
+                return beanMethod.invoke(targetBean, args);
             }
         });
 
         return returnedBean;
     }
 
+    private boolean isBenchMarkAnnotationPresentAndTrue(Method beanMethod) {
+        return beanMethod.isAnnotationPresent(Benchmark.class) && beanMethod.getAnnotation(Benchmark.class).value();
+    }
+
+    private <T> Object wrapMethodInBenchmark(T original, Method beanMethod, Object[] args)
+            throws InvocationTargetException, IllegalAccessException {
+        long start = System.nanoTime();
+        Object invoke = beanMethod.invoke(original, args);
+        long end = System.nanoTime();
+        System.out.println(String.format("Method '%s', execution time %d", beanMethod.getName(), end - start));
+        return invoke;
+    }
+
     private Class<?>[] getAllDeclaredInterfaces(Object bean) {
         List<Class<?>> interfaces = new ArrayList<>();
         Class<?> currentClass = bean.getClass();
-        while(currentClass != Object.class) {
-            for(Class<?> intrface: currentClass.getInterfaces()) {
+        while (currentClass != Object.class) {
+            for (Class<?> intrface : currentClass.getInterfaces()) {
                 interfaces.add(intrface);
             }
             currentClass = currentClass.getSuperclass();
