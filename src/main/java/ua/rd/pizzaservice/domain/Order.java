@@ -7,6 +7,9 @@ public class Order {
     private Customer customer;
     private List<Pizza> pizzas;
 
+    public Order() {
+    }
+
     public Order(Customer customer, List<Pizza> pizzas) {
         id++;
         this.customer = customer;

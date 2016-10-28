@@ -18,9 +18,6 @@ public class SpringAppRunner {
         ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext("repoContext.xml");  //запускает создание контейнера и считывает все бины
         System.out.println(Arrays.toString(repoContext.getBeanDefinitionNames()));
 
-        //ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");  //запускает создание контейнера и считывает все бины
-
-
         ConfigurableApplicationContext appContext = new ClassPathXmlApplicationContext(
                                 new String[]{"appContext.xml"}, repoContext);
 
@@ -35,7 +32,9 @@ public class SpringAppRunner {
 
         OrderService orderService = (OrderService) appContext.getBean("orderService");
         Order order = orderService.placeNewOrder(null, 1, 3);
-        System.out.println(order);
+        System.out.println("order 1,3: " + order);
+        order = orderService.placeNewOrder(null, 1);
+        System.out.println("order 1: " + order);
 
 
         appContext.close();
