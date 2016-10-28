@@ -95,7 +95,7 @@ public class ApplicationContext implements Context {
         }
 
         public void createBeanProxy() {
-            if (hasMethodAnnotation(BenchMark.class)) {
+            if (hasMethodAnnotation(Benchmark.class)) {
                 Class<?> clazz = bean.getClass();
                 T original = bean;
                 bean = (T) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), type.getInterfaces(),
@@ -127,7 +127,7 @@ public class ApplicationContext implements Context {
         }
 
         public boolean isBenchMarkAnnotationPresentAndTrue(Method beanMethod) {
-            return beanMethod.isAnnotationPresent(BenchMark.class) && beanMethod.getAnnotation(BenchMark.class).value();
+            return beanMethod.isAnnotationPresent(Benchmark.class) && beanMethod.getAnnotation(Benchmark.class).value();
         }
     }
 }

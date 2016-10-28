@@ -19,6 +19,8 @@
     <!--<constructor-arg ref="orderRepository"/>-->
     <!--</bean>-->
 
+    <bean class="ua.rd.pizzaservice.infrastructure.BenchmarkBeanProcessor" />
+
     <bean name="order" class="ua.rd.pizzaservice.domain.Order" scope="prototype"/>
 
     <bean name="pizzaService" class="ua.rd.pizzaservice.services.SimplePizzaService" autowire="constructor"/>

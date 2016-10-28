@@ -1,7 +1,7 @@
 package ua.rd.pizzaservice.services;
 
 import ua.rd.pizzaservice.domain.Pizza;
-import ua.rd.pizzaservice.infrastructure.BenchMark;
+import ua.rd.pizzaservice.infrastructure.Benchmark;
 import ua.rd.pizzaservice.repository.PizzaRepository;
 
 public class SimplePizzaService implements PizzaService {
@@ -14,7 +14,7 @@ public class SimplePizzaService implements PizzaService {
         this.pizzaRepository = pizzaRepository;
     }
 
-    @BenchMark(false)
+    @Benchmark
     @Override
     public Pizza find(Integer id) {
         return pizzaRepository.find(id);

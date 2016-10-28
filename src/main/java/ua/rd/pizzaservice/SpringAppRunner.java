@@ -16,15 +16,15 @@ public class SpringAppRunner {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext("repoContext.xml");  //запускает создание контейнера и считывает все бины
-        System.out.println(Arrays.toString(repoContext.getBeanDefinitionNames()));
+        System.out.println("repoContext: " + Arrays.toString(repoContext.getBeanDefinitionNames()));
 
         ConfigurableApplicationContext appContext = new ClassPathXmlApplicationContext(
                                 new String[]{"appContext.xml"}, repoContext);
 
-        System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
+        System.out.println("appContext: " + Arrays.toString(appContext.getBeanDefinitionNames()));
 
         PizzaRepository pizzaRepository = (PizzaRepository) repoContext.getBean("pizzaRepository"); //имя плюс тип тогда не нужно будет делать каст
-        System.out.println(pizzaRepository.find(1));  // null т.к. не вызвался метод init
+        System.out.println("find(1): " + pizzaRepository.find(1));  // null т.к. не вызвался метод init
 
 
         OrderRepository orderRepository = (OrderRepository) repoContext.getBean("orderRepository");
