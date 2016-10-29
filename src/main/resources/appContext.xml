@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
-                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-
-    <!-- bean definitions here -->
-
-    <!--<bean name="pizzaService"-->
-          <!--class="ua.rd.pizzaservice.services.SimplePizzaService">-->
-        <!--<constructor-arg ref="pizzaRepository"/>-->
-    <!--</bean>-->
-    <!--<import resource="repoContext.xml"></import>-->
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--<bean name="orderService"-->
     <!--class="ua.rd.pizzaservice.services.SimpleOrderService">-->
@@ -19,14 +14,14 @@
     <!--<constructor-arg ref="orderRepository"/>-->
     <!--</bean>-->
 
-    <bean class="ua.rd.pizzaservice.infrastructure.BenchmarkBeanProcessor" />
-
-    <bean name="order" class="ua.rd.pizzaservice.domain.Order" scope="prototype"/>
-
-    <bean name="pizzaService" class="ua.rd.pizzaservice.services.SimplePizzaService" autowire="constructor"/>
-
     <bean name="orderService" class="ua.rd.pizzaservice.services.SimpleOrderService" autowire="constructor">
-        <lookup-method name="createNewOrder" bean="order"/>
+    <lookup-method name="createNewOrder" bean="order"/>
     </bean>
+
+    <context:component-scan base-package="ua.rd.pizzaservice.services"/>
+    <context:component-scan base-package="ua.rd.pizzaservice.domain"/>
+
+    <context:annotation-config/>
+
 
 </beans>

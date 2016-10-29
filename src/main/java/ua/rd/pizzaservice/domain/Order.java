@@ -1,7 +1,12 @@
 package ua.rd.pizzaservice.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class Order {
     private Long id = 0L;
     private Customer customer;

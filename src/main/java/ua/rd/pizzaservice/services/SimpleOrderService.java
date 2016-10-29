@@ -1,6 +1,7 @@
 package ua.rd.pizzaservice.services;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import ua.rd.pizzaservice.domain.Customer;
@@ -15,9 +16,10 @@ import java.util.List;
 /**
  * пицца, кастомер, ордер
  */
-public class SimpleOrderService implements OrderService{
+public class SimpleOrderService implements OrderService{ //, ApplicationContextAware{
     private final PizzaService pizzaService;
     private final OrderRepository orderRepository;
+    //private ApplicationContext context;
 
     public SimpleOrderService(PizzaService pizzaService, OrderRepository orderRepository) {
         this.pizzaService = pizzaService;
@@ -60,4 +62,9 @@ public class SimpleOrderService implements OrderService{
         orderRepository.save(newOrder);
     }
 
+//    @Override
+//    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+//        this.context = applicationContext;
+//
+//    }
 }
