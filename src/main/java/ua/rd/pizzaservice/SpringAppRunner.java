@@ -35,10 +35,9 @@ public class SpringAppRunner {
         System.out.println("order 1,3: " + order);
         order = orderService.placeNewOrder(null, 1);
         System.out.println("order 1: " + order);
-
+        System.out.println(orderService.getClass()); //сделает прокси
 
         appContext.close();
         repoContext.close();
-
     }
 }

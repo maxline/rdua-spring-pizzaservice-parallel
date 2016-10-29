@@ -15,10 +15,9 @@ import java.util.List;
 /**
  * пицца, кастомер, ордер
  */
-public class SimpleOrderService implements OrderService, ApplicationContextAware {
+public class SimpleOrderService implements OrderService{
     private final PizzaService pizzaService;
     private final OrderRepository orderRepository;
-    private ApplicationContext context;
 
     public SimpleOrderService(PizzaService pizzaService, OrderRepository orderRepository) {
         this.pizzaService = pizzaService;
@@ -42,12 +41,13 @@ public class SimpleOrderService implements OrderService, ApplicationContextAware
         return newOrder;
     }
 
-    private Order createNewOrder() {
-        try {
-            return (Order) context.getBean("order");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+     protected Order createNewOrder() {
+        throw new IllegalStateException("Container can not get bean Order!");
+//        try {
+//            return (Order) context.getBean("order");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
 
@@ -58,13 +58,6 @@ public class SimpleOrderService implements OrderService, ApplicationContextAware
 
     private void saveOrder(Order newOrder) {
         orderRepository.save(newOrder);
-    }
-
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.context = applicationContext;
-
     }
 
 }
