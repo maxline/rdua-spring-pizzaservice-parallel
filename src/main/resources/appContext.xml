@@ -14,9 +14,9 @@
     <!--<constructor-arg ref="orderRepository"/>-->
     <!--</bean>-->
 
-    <bean name="orderService" class="ua.rd.pizzaservice.services.SimpleOrderService" autowire="constructor">
-    <lookup-method name="createNewOrder" bean="order"/>
-    </bean>
+    <!--<bean name="orderService" class="ua.rd.pizzaservice.services.SimpleOrderService" autowire="constructor">-->
+    <!--<lookup-method name="createNewOrder" bean="order"/>-->
+    <!--</bean>-->
 
     <context:component-scan base-package="ua.rd.pizzaservice.services"/>
     <context:component-scan base-package="ua.rd.pizzaservice.domain"/>

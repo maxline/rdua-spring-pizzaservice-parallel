@@ -1,9 +1,8 @@
 package ua.rd.pizzaservice.services;
 
-import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Service;
 import ua.rd.pizzaservice.domain.Customer;
 import ua.rd.pizzaservice.domain.Order;
 import ua.rd.pizzaservice.domain.Pizza;
@@ -16,11 +15,13 @@ import java.util.List;
 /**
  * пицца, кастомер, ордер
  */
-public class SimpleOrderService implements OrderService{ //, ApplicationContextAware{
+@Service("orderService")
+public class SimpleOrderService implements OrderService { //, ApplicationContextAware{
     private final PizzaService pizzaService;
     private final OrderRepository orderRepository;
     //private ApplicationContext context;
 
+    @Autowired
     public SimpleOrderService(PizzaService pizzaService, OrderRepository orderRepository) {
         this.pizzaService = pizzaService;
         this.orderRepository = orderRepository;
@@ -43,7 +44,8 @@ public class SimpleOrderService implements OrderService{ //, ApplicationContextA
         return newOrder;
     }
 
-     protected Order createNewOrder() {
+    @Lookup
+    protected Order createNewOrder() {
         throw new IllegalStateException("Container can not get bean Order!");
 //        try {
 //            return (Order) context.getBean("order");
@@ -51,7 +53,6 @@ public class SimpleOrderService implements OrderService{ //, ApplicationContextA
 //            throw new RuntimeException(e);
 //        }
     }
-
 
     private Pizza findPizzaByID(Integer id) {
 
